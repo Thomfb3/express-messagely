@@ -1,3 +1,10 @@
+const express = require("express");
+const router = new express.Router();
+const ExpressError = require("../expressError");
+const { ensureLoggedIn, ensureAdmin } = require("../middleware/auth");
+
+
+
 /** GET / - get list of users.
  *
  * => {users: [{username, first_name, last_name, phone}, ...]}
@@ -32,3 +39,6 @@
  *                 to_user: {username, first_name, last_name, phone}}, ...]}
  *
  **/
+
+
+module.exports = router;
