@@ -16,6 +16,18 @@ const { ensureLoggedIn, ensureAdmin } = require("../middleware/auth");
  * Make sure that the currently-logged-in users is either the to or from user.
  *
  **/
+router.get("/:id", async (req, res, next) => {
+    try {
+        let message = await Message.get(req.params.id);
+        return res.json({ message });
+    }
+
+    catch (e) {
+        return next(e);
+    };
+});
+
+
 
 
 /** POST / - post message.
@@ -24,6 +36,18 @@ const { ensureLoggedIn, ensureAdmin } = require("../middleware/auth");
  *   {message: {id, from_username, to_username, body, sent_at}}
  *
  **/
+router.post("/", async (req, res, next) => {
+    try {
+        let message = await Message.create(req.body);
+        return res.json({ message });
+    }
+
+    catch (e) {
+        return next(e);
+    };
+});
+
+
 
 
 /** POST/:id/read - mark message as read:
@@ -33,5 +57,18 @@ const { ensureLoggedIn, ensureAdmin } = require("../middleware/auth");
  * Make sure that the only the intended recipient can mark as read.
  *
  **/
+
+router.post("/:id/read", async (req, res, next) => {
+    try {
+        let message = await Message.markRead(req.params.id);
+        return res.json({ message });
+    }
+
+    catch (e) {
+        return next(e);
+    };
+});
+
+
 
 module.exports = router;
